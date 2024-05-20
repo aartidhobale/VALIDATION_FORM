@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            display: grid;
+            gap: 10px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        select{
+            width: 95%;
+        }
+        input[type="submit"] {
+            width: 50%;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+        .password-strength {
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name"  oninput="validateName()">
+            <span id="nameError" class="error"></span>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email"  oninput="validateEmail()">
+            <span id="emailError" class="error"></span>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"  oninput="validatePassword()">
+            <span id="passwordError" class="error"></span>
+            <div class="password-strength" id="passwordStrength"></div>
+
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" name="mobile"  oninput="validateMobile()">
+            <span id="mobileError" class="error"></span>
+
+            <span style="text-align: center;">
+                <input type="submit" value="Submit">
+            </span>
+        </form>
+    </div>
+    <script>
+        function validateName() {
+            const name = document.getElementById("name").value;
+            const namePattern = /^[A-Za-z\s]+$/;
+            const nameError = document.getElementById("nameError");
+
+            if (!name.match(namePattern)) {
+                nameError.textContent = "Invalid name";
+            } else {
+                nameError.textContent = "";
+            }
+        }
+
+        function validateEmail() {
+            const email = document.getElementById("email").value;
+            const emailPattern = /^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+            const emailError = document.getElementById("emailError");
+
+            if (!email.match(emailPattern)) {
+                emailError.textContent = "Invalid email";
+            } else {
+                emailError.textContent = "";
+            }
+        }
+
+        function validatePassword() {
+            const password = document.getElementById("password").value;
+            const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            const passwordError = document.getElementById("passwordError");
+            const passwordStrength = document.getElementById("passwordStrength");
+
+            if (!password.match(passwordPattern)) {
+                passwordError.textContent = "Password must be at least 8 characters, including uppercase, lowercase, and a number";
+                passwordStrength.textContent = "";
+            } else {
+                passwordError.textContent = "";
+                if (password.length < 8) {
+                    passwordStrength.textContent = "Weak";
+                    passwordStrength.style.color = "red";
+                } else if (password.length < 12) {
+                    passwordStrength.textContent = "Medium";
+                    passwordStrength.style.color = "orange";
+                } else {
+                    passwordStrength.textContent = "Strong";
+                    passwordStrength.style.color = "green";
+                }
+            }
+        }
+
+        function validateMobile() {
+            const mobile = document.getElementById("mobile").value;
+            const mobilePattern = /^\d{10}$/;
+            const mobileError = document.getElementById("mobileError");
+
+            if (!mobile.match(mobilePattern)) {
+                mobileError.textContent = "Invalid mobile number";
+            } else {
+                mobileError.textContent = "";
+            }
+        }
+        function validateForm() {
+            // Perform additional validation and submission logic here
+        }
+    </script>
+</body>
+</html>
